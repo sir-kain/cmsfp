@@ -1,0 +1,152 @@
+{% extends '::base.html.twig' %} {% block header %} {% include 'FPCMSBundle:layout:header.html.twig' %} {% endblock %} {% block body %} {#
+<div id="wrapper"> #}
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <i class="fa fa-eyedropper" aria-hidden="true"></i> Détails examen
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong> Resultat examen
+                            {% if (examan.consultation != null) %}
+                                de la consultation {{ examan.consultation.numeroconsultation }}
+                            {% else %}
+                                du patient {{ examan.patient.nomPatient }}
+                            {% endif %}
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        <strong>Type de patient: </strong>
+                                        {% if (examan.consultation != null) %}
+                                            {{ examan.consultation.patient.typepatient.type }}
+                                        {% else %}
+                                            {{ examan.patient.typepatient.type }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="list-group-item">
+                                        <strong>Nom patient: </strong>
+                                        {% if (examan.consultation != null) %}
+                                            {{ examan.consultation.patient.prenomPatient |capitalize }} {{ examan.consultation.patient.nomPatient |capitalize }}
+                                        {% else %}
+                                            {{ examan.patient.prenomPatient |capitalize }} {{ examan.patient.nomPatient |capitalize }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        <strong>Type d'examen: </strong>
+                                        {{ examan.typeexamen.nomTypeExamen |capitalize }}
+                                    </div>
+                                    <div class="list-group-item">
+                                        <strong>Prix: </strong>
+                                        {% if examan.prix %}
+                                            {{ examan.prix }} Fcfa
+                                        {% else %}
+
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                {% for result in resultats %}
+                                    <div class="row" id="sectionresult">
+                                        <p>
+                                            <strong> {{ result.champstypeexam.libelle }} : </strong>
+                                            {{ result.resultat }} {{ result.champstypeexam.unite }}
+                                            {% if canUpdate %}
+                                                {% if (examan.consultation != null) %}
+                                                    <button data-chtypeex="{{ result.champstypeexam.id }}"
+                                                            data-idte="{{ examan.typeexamen.id }}"
+                                                            data-idconsult="{{ examan.consultation.id }}"
+                                                            data-res="{{ examan.resultat }}"
+                                                            data-libelle="{{ result.champstypeexam.libelle }}"
+                                                            class="updateResult btn btn-danger btn-outline btn-xs pull-right"
+                                                            id="{{ examan.id }}">
+                                                        <i class="fa fa-edit"></i></button>
+                                                {% else %}
+                                                    <button data-chtypeex="{{ result.champstypeexam.id }}"
+                                                            data-idte="{{ examan.typeexamen.id }}"
+                                                            data-idconsult="0"
+                                                            data-res="{{ examan.resultat }}"
+                                                            data-libelle="{{ result.champstypeexam.libelle }}"
+                                                            class="updateResult btn btn-danger btn-outline btn-xs pull-right"
+                                                            id="{{ examan.id }}">
+                                                        <i class="fa fa-edit"></i></button>
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row container-fluid pull-right" style="padding-top: 50px">
+                            {% if examan.consultation %}
+                                <a href="{{ path('printexam', {id: examan.consultation.id}) }}"
+                                   class="btn btn-outline btn-success">
+                                    Imprimer
+                                </a>
+                            {% else %}
+                                <a href="{{ path('printexamwithoutconsult', {id: examan.id}) }}"
+                                   class="btn btn-outline btn-success">
+                                    Imprimer
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{#{% block body %}#}
+    {#<h1>Examan</h1>#}
+
+    {#<table>#}
+        {#<tbody>#}
+        {#<tr>#}
+            {#<th>Id</th>#}
+            {#<td>{{ examan.id }}</td>#}
+        {#</tr>#}
+        {#<tr>#}
+            {#<th>Resultat</th>#}
+            {#<td>{{ examan.resultat }}</td>#}
+        {#</tr>#}
+        {#<tr>#}
+            {#<th>Prix</th>#}
+            {#<td>{{ examan.prix }}</td>#}
+        {#</tr>#}
+        {#</tbody>#}
+    {#</table>#}
+
+    {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('examen_index') }}">Back to the list</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ path('examen_edit', { 'id': examan.id }) }}">Edit</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#{{ form_start(delete_form) }}#}
+            {#<input type="submit" value="Delete">#}
+            {#{{ form_end(delete_form) }}#}
+        {#</li>#}
+    {#</ul>#}
+{#{% endblock %}#}

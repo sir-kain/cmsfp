@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center" style="font-size: 18px;">
+            {{ typeexam.nomTypeExamen }}
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nc">Numéro consultation </label>
+                        <input id="nc" type="text" value="{{ consultation.numeroconsultation }} "
+                               readonly="readonly" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="tp">Type de patient </label>
+                        <input id="tp" type="text" value="{{ consultation.patient.typepatient.type }}"
+                               readonly="readonly" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="np">Prenom et nom patient </label>
+                        <input id="np" type="text"
+                               value="{{ consultation.patient.prenomPatient }} {{ consultation.patient.nomPatient }}"
+                               readonly="readonly" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+                    <div class="form-group">
+                        <label for="te">Type examen</label>
+                        <input id="te" type="text" value="{{ typeexam.nomTypeExamen }}" readonly="readonly"
+                               class="form-control">
+                    </div>
+                    {% if app.user.typeuser.profil == 'Laborantin' %}
+                        <div class="form-group">
+                            {% set prix = typeexam.prix %}
+                            {% if consultation.patient.typepatient.type == 'Ayant droit' %}
+                                {% set prix = prix - (prix *0.8) %}
+                            {% endif %}
+                            <label for="pr">Prix</label>
+                            <input id="pr" type="text" value="{{ prix }}" readonly="readonly" class="form-control">
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="datepre">Date de prélevement</label>
+                        <input id="datepre" type="date" value="" class="form-control">
+                    </div>
+
+                </div>
+                <!-- /.col-lg-6 (nested) -->
+            </div>
+            <div class="row" id="sectionResultat"></div>
+            <button data-idte="{{ typeexam.id }}" data-idconsult="{{ consultation.id }}" id="createexamens"
+                    type="submit" class="btn btn-lg btn-success btn-outline pull-right">
+                <i class="fa fa-plus"></i> {{ button_label }}
+            </button>
+            <!-- /.row (nested) -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <br>
+    {% if otherexam != null %}
+        <div class="row col-md-8">
+            <label class="form-control text-warning text-center">
+                Les précédents examens de type {{ typeexam.nomTypeExamen | capitalize }} de
+                {{ consultation.patient.prenomPatient | capitalize }}
+                {{ consultation.patient.nomPatient | capitalize }}
+            </label>
+            <div class="form-group">
+                <table width="100%" class="table table-striped text-center table-bordered table-hover">
+                    <thead>
+                    <tr class="text-center">
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Type examen</th>
+                        <th class="text-center">Resultat</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {#{% for other in otherexam %}#}
+                    {#<tr class="gradeA">#}
+                    {#<td>{{ other.dateAjout | date('j/m/Y') }}</td>#}
+                    {#<td>{{ other.typeexamen.nomTypeExamen }}</td>#}
+                    {#<td>{{ other.resultat }} {{ other.typeexamen.unite }}</td>#}
+                    {#<td class="center text-center">#}
+                    {#<a href="{{ path('examen_show', {id:other.id}) }}" title="Voir plus">#}
+                    {#<i class="fa fa-eye btn btn-xs btn-primary" aria-hidden="true"></i>#}
+                    {#</a>#}
+                    {#</td>#}
+                    {#</tr>#}
+                    {#{% endfor %}#}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    <!-- /.panel -->
+</div>
+<!-- /.row -->

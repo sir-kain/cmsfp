@@ -1,0 +1,27 @@
+{% extends "FPAppBundle::base.html.twig" %}
+{% block titre %}{{ parent() }} - Suppression{% endblock %}
+{% block contenu %}
+  <h1>Supprimer un acte</h1>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="jumbotron">
+        <form action="{{ path('deleteservice') }}" method="post">
+          <fieldset>
+            <legend><i class="fa fa-trash" aria-hidden="true"></i>Supprimer un service</legend>
+            <h4 style="margin-bottom: 28px;">Êtes-vous certain de vouloir supprimer le service ?</h4>
+            <a href="{{ path('fp_actes_voir', {'id': projetActe.id}) }}" class="btn btn-default">
+              <i class="fa fa-angle-left"></i>
+              Annuler
+            </a>
+            <button type="submit" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+              Supprimer l'acte
+            </button>
+            {# Ceci va générer le champ CSRF #}
+            {{ form_rest(form) }}
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

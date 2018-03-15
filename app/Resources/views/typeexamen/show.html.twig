@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Typeexaman</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ typeExaman.id }}</td>
+            </tr>
+            <tr>
+                <th>Nomtypeexamen</th>
+                <td>{{ typeExaman.nomTypeExamen }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ typeExaman.prix }}</td>
+            </tr>
+            <tr>
+                <th>Unite</th>
+                <td>{{ typeExaman.unite }}</td>
+            </tr>
+            <tr>
+                <th>Valeurmaximale</th>
+                <td>{{ typeExaman.valeurmaximale }}</td>
+            </tr>
+            <tr>
+                <th>Valeurminimal</th>
+                <td>{{ typeExaman.valeurminimal }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('typeexamen_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('typeexamen_edit', { 'id': typeExaman.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

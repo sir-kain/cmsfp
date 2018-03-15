@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+    {# Génération du champ bureau. #}
+    {# Génération du champ numéro de projet. #}
+<div class="col-lg-6">
+    <div class="form-group" id="">
+        {# Génération du label. #}
+        {{ form_label(form.medicaux, "Medicaux") }}
+        {# Affichage des erreurs du champs. #}
+        {{ form_errors(form.medicaux) }}
+        {# Génération de l'input. #}
+        {{ form_widget(form.medicaux, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+<div class="col-lg-6">
+    {# Génération du champ date projet. #}
+    <div class="form-group" id="chirurgicaux">
+      {# Génération du label. #}
+      {{ form_label(form.churirgicaux, "Chirurgicaux") }}
+      {# Affichage des erreurs du champs. #}
+      {{ form_errors(form.churirgicaux) }}
+      {# Génération de l'input. #}
+      {{ form_widget(form.churirgicaux, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+    <button type="submit" class="btn btn-outline btn-success pull-right">
+        <i class="fa fa-plus"></i> {{ button_label }}
+    </button>     
+    {# Génération automatique des champs pas encore écrits. #}
+    {{ form_rest(form) }}    
+  {# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}

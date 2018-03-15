@@ -1,0 +1,69 @@
+{{ form_start(form) }}
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+<div class="row">
+    <div class="col-lg-6 col-md-offset-3">
+        <div class="panel" style="border-color: #5bb55b;">
+            <div class="panel-heading" style="background-color: #5bb55b">
+                <strong>
+                    {% if app.user.typeuser.profil == 'Secretaire' %} Prescrire examen
+                    {% else %}
+                        Consultation
+                    {% endif %}
+                </strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {# Génération du champ numéro de projet. #}
+                        {% if app.user.typeuser.profil == 'Secretaire' %}
+                            <div class="form-group">
+                                <label for=""> Prescrire examen: </label>
+                                {{ form_widget(form.typeexamen,
+                                    {'attr': {'class': 'form-control tag-input-type', 'placeholder': 'Ajouter une analyse'}}) }}
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                {# Génération du label. #}
+                                {{ form_label(form.soustypeconsultation, "Type Consultation") }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.soustypeconsultation) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.soustypeconsultation, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {# Génération du label. #}
+                                {{ form_label(form.motif, "Motif") }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.motif) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.motif) }}
+                            </div>
+                            <div class="form-group {% if not form.observation.vars.valid %}has-error{% endif %}">
+                                {# Génération du label. #}
+                                {{ form_label(form.observation, "Observation") }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.observation) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.observation, {'attr': {'rows': '2'}}) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+<button type="submit" class="col-md-offset-5 btn btn-outline btn-success">
+    {% if nouvelle_consultation %}
+        <i class="fa fa-plus"></i> {{ button_label }}
+    {% else %}
+        <i class="fa fa-save"></i> {{ button_label }}
+    {% endif %}
+</button>
+
+{# Génération automatique des champs pas encore écrits. #}
+    {# {{ form_rest(form) }}     #}
+  {# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}

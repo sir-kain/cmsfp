@@ -1,0 +1,251 @@
+<!-- Navigation -->
+<nav class="navbar navbar- navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #5bb55b">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    <!-- /.navbar-header -->
+
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                {% set nbrdvdemain = 0 %}
+                {#{% if rdvUser != null %}#}
+                {% for rdv in rdvUser %}
+                    {% if rdv.dateRDV | date('d-m-y') ==  demain | date('d-m-y') or rdv.dateRDV | date('d-m-y') == "now" | date('d-m-y') %}
+                        {% set nbrdvdemain = nbrdvdemain + 1 %}
+                    {% endif %}
+                {% endfor %}
+                {% if nbrdvdemain > 0 %}
+                    <i style="color: #dd1155;">({{ nbrdvdemain }})</i>
+                    <i class="fa fa-bell fa-fw" style="color: #dd1155;"></i> <i style="color:#d1204c;"
+                                                                                class="fa fa-caret-down"></i>
+                {% else %}
+                    <i class="fa fa-bell-slash fa-fw"></i> <i class="fa fa-caret-down"></i>
+                {% endif %}
+            </a>
+            <ul class="dropdown-menu dropdown-alerts">
+                {% for rdv in rdvUser %}
+                    {% if rdv.dateRDV | date('d-m-y') ==  demain | date('d-m-y') or rdv.dateRDV | date('d-m-y') == "now" | date('d-m-y') %}
+                        <li class="inbox-item clearfix">
+                            <a href="{{ path('detailpatient', {id: rdv.patient.id}) }}">
+                                <div class="media">
+                                    <div class="media-left">
+                                        {% if rdv.patient.filename != null %}
+                                            <img src="{{ asset("uploads/" ~ rdv.patient.filename) }}" alt="" width="40">
+                                        {% else %}
+                                            {% if rdv.patient.genrePatient == 'Masculin' %}
+                                                <img src="{{ asset("uploads/Patient-avatar-M.jpeg") }}" alt=""
+                                                     width="40">
+                                            {% else %}
+                                                <img src="{{ asset("uploads/Patient-avatar-F.png") }}" alt=""
+                                                     width="40">
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading name">
+                                            <strong>
+                                                {{ rdv.patient.prenomPatient }} {{ rdv.patient.nomPatient }}
+                                            </strong>
+                                        </h5>
+                                        <p class="text"> {{ rdv.dateRDV | date('d-m-y h:i') }}</p>
+                                        {#<span class="timestamp">4 minutes ago</span>#}
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li>
+                        <a>
+                            <div>
+                                <i class="fa fa-hand-grab-o fa-fw"></i> Aucun RDV prévu pour demain
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <!-- /.dropdown-alerts -->
+        </li>
+        <!-- /.dropdown -->
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                {{ app.user.username  |capitalize }} <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li><a href="{{ path('index') }}"><i class="fa fa-user fa-fw"></i>
+                        {{ app.user.username |capitalize }}
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li><a><i class="fa fa-user fa-fw"></i>
+                        {{ app.user.typeuser.profil }}
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="{{ path('fos_user_change_password') }}"><i class="fa fa-key fa-fw"></i>
+                        Modifier mon mot de passe
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out fa-fw"></i>
+                        Se deconnecter</a>
+                </li>
+            </ul>
+            <!-- /.dropdown-user -->
+        </li>
+        <!-- /.dropdown -->
+    </ul>
+    <!-- /.navbar-top-links -->
+    <br>
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="sidebar-search">
+                    <div class="input-group custom-search-form">
+                        <input type="text" class="form-control" placeholder="Rechercher...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <!-- /input-group -->
+                </li>
+
+                <li>
+                    <a href="{{ path('index') }}"><i class="fa fa-dashboard fa-fw"></i> Tableau de bord</a>
+                </li>
+                {% if app.user.typeuser.profil == 'Administrateur' or
+                    app.user.typeuser.profil == 'Medecin' or
+                    app.user.typeuser.profil == 'Chirurgie dentaire' or
+                    app.user.typeuser.profil == 'Sage femme' or
+                    app.user.typeuser.profil == 'Infirmier' %}
+                    <li>
+                        <a href="{{ path('indexpatient') }}"><i class="fa fa-user fa-fw"></i> Patients <span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('ajoutpatient') }}">Ajout patient</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('indexpatient') }}">Liste patients</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if app.user.typeuser.profil == 'Administrateur'  or app.user.typeuser.profil == 'Pharmacien' %}
+                    <li>
+                        <a href="{{ path('medicament_index') }}"><i class="fa fa-medkit fa-fw"></i>
+                            Medicaments <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('medicament_new') }}">Ajout medicament</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('medicament_index') }}">Liste medicaments</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if app.user.typeuser.profil == 'Medecin' or
+                    app.user.typeuser.profil == 'Chirurgie dentaire' or
+                    app.user.typeuser.profil == 'Sage femme' or
+                    app.user.typeuser.profil == 'Laborantin' or
+                    app.user.typeuser.profil == 'Infirmier' %}
+                    <li>
+                        <a><i class="fa fa-flask fa-fw"></i> Examen <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('examen_index') }}"><i class="fa fa-flask fa-fw"></i>
+                                    Examens en attente</a>
+                            </li>
+                            {% if app.user.typeuser.profil == 'Laborantin' %}
+                                <li>
+                                    <a href="{{ path('examen_lastest') }}"><i class="fa fa-flask fa-fw"></i>
+                                        Examens</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if app.user.typeuser.profil == 'Secretaire' %}
+                    <li>
+                        <a><i class="fa fa-flask fa-fw"></i> Facturation <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('examen_index') }}"><i class="fa fa-flask fa-fw"></i>
+                                    Examens en attente</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('ajoutpatient') }}"><i class="fa fa-user fa-fw"></i>Ajout patient</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('indexpatient') }}"> <i class="fa fa-user fa-fw"></i>Liste patients</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="{{ path('indexservice') }}"><i class="fa fa-dashboard fa-fw"></i> Unité
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('ajoutservice') }}">Ajout unité</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('indexservice') }}">Liste unités</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ path('indexuser') }}"><i class="fa fa-user-md fa-fw" aria-hidden="true"></i>
+                            Utilisateur <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('fos_user_registration_register') }}">Ajout utilisateur</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('indexuser') }}">Liste utilisateurs</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-dashboard fa-fw"></i> Examen
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('typeexamen_new') }}">Ajout examen</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('typeexamen_index') }}">Liste examens</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-dashboard fa-fw"></i> Type examen
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('supertypeexamen_new') }}">Ajout type examen</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('supertypeexamen_index') }}">Liste des types d'examen</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+    <!-- /.navbar-static-side -->
+</nav>

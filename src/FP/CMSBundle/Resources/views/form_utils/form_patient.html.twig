@@ -1,0 +1,202 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            {% if newPatient %}
+                Nouveau patient
+            {% else %}
+                <i class="fa fa-edit" aria-hidden="true"></i> Modifier un patient
+            {% endif %}
+        </h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {% if newPatient %}
+                    <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un nouveau patient
+                {% else %}
+                    <i class="fa fa-edit" aria-hidden="true"></i> Modifier un patient
+                {% endif %}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.type_patient, "Type patient") }}
+                            {{ form_errors(form.type_patient) }}
+                            {{ form_widget(form.type_patient, {'id': 'typePatient', 'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group" id="matriculePatient">
+                            {{ form_label(form.matricule, "Matricule agent") }}
+                            {{ form_errors(form.matricule) }}
+                            {{ form_widget(form.matricule, {'id': 'matricule', 'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group" id="structure">
+                            {{ form_label(form.structure, "Ministère de tutelle") }}
+                            {{ form_errors(form.structure) }}
+                            {{ form_widget(form.structure, {'id': 'selectstruc', 'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.nomPatient, "Nom") }}
+                            {{ form_errors(form.nomPatient) }}
+                            {{ form_widget(form.nomPatient, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        {# Génération du champ date projet. #}
+                        <div class="form-group">
+                            {{ form_label(form.prenomPatient, "Prenom") }}
+                            {{ form_errors(form.prenomPatient) }}
+                            {{ form_widget(form.prenomPatient, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        {# Génération du champ bureau. #}
+                        <div class="form-group">
+                            {{ form_label(form.genrePatient, "Genre") }}
+                            {{ form_errors(form.genrePatient) }}
+                            {{ form_widget(form.genrePatient, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        {# Génération du champ type. #}
+                        <div class="form-group">
+                            {{ form_label(form.telPatient, "Telephone") }}
+                            {{ form_errors(form.telPatient) }}
+                            {{ form_widget(form.telPatient, {'id': 'telpatient', 'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.file, "Joindre une image") }}
+                            {{ form_errors(form.file) }}
+                            {{ form_widget(form.file) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" id="statutPatient">
+                            {{ form_label(form.statut, "Lien parental") }}
+                            {{ form_errors(form.statut) }}
+                            {{ form_widget(form.statut, {'id': 'statut', 'attr': {'class': 'form-control'}}) }}
+                        </div>
+                            {# Génération du champ objet. #}
+                            <div class="form-group">
+                                {{ form_label(form.situationFamiliale, "Situation Familliale") }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.situationFamiliale) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.situationFamiliale, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {# Génération du champ effectif. #}
+                            <div class="form-group">
+                                {{ form_label(form.adressePatient, "Adresse") }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.adressePatient) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.adressePatient, {'attr': {'class': 'form-control', 'rows': '1'}}) }}
+                            </div>
+                            {# Génération du champ numéro patient. #}
+                            <div class="form-group">
+                                {{ form_label(form.email, "Email") }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.email) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {# Génération du champ date patient. #}
+                            <div class="form-group">
+                                {{ form_label(form.groupeSanguin) }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.groupeSanguin) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.groupeSanguin, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            {# Génération du champ date publication. #}
+                            <div class="form-group">
+                                {{ form_label(form.dateNaiss) }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.dateNaiss) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.dateNaiss, {'attr': {'max': dateToday, 'class': 'form-control'
+                                }}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.terrainparticulier) }}
+                                {# Affichage des erreurs du champs. #}
+                                {{ form_errors(form.terrainparticulier) }}
+                                {# Génération de l'input. #}
+                                {{ form_widget(form.terrainparticulier)}}
+                            </div>
+                    </div>
+                    {# </div> #}
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {% if newPatient %}
+                    <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un contact d'urgence
+                {% else %}
+                    <i class="fa fa-edit" aria-hidden="true"></i> Modifier le contact d'urgence
+                {% endif %}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form_label(form.tuteur.nomTuteur, "Nom") }}
+                            {{ form_errors(form.tuteur.nomTuteur) }}
+                            {{ form_widget(form.tuteur.nomTuteur, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form_label(form.tuteur.prenomTuteur, "Prenom") }}
+                            {{ form_errors(form.tuteur.prenomTuteur) }}
+                            {{ form_widget(form.tuteur.prenomTuteur, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form_label(form.tuteur.telTuteur, "Telephone") }}
+                            {{ form_errors(form.tuteur.telTuteur) }}
+                            {{ form_widget(form.tuteur.telTuteur, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form_label(form.tuteur.adresseTuteur, "Adresse") }}
+                            {{ form_errors(form.tuteur.adresseTuteur) }}
+                            {{ form_widget(form.tuteur.adresseTuteur, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form_label(form.tuteur.lienparental, "Lien parental") }}
+                            {{ form_errors(form.tuteur.lienparental) }}
+                            {{ form_widget(form.tuteur.lienparental, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+
+        <button type="submit" class="btn btn-outline btn-success pull-right">
+            {% if newPatient %}
+                <i class="fa fa-plus"></i> {{ button_label }}
+            {% else %}
+                <i class="fa fa-save"></i> Modifier
+            {% endif %}
+        </button>
+        <a href="{{ path('indexpatient') }}" class="btn btn-outline btn-danger pull-right">
+            <i class="fa fa-ban"></i> Annuler
+        </a>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->

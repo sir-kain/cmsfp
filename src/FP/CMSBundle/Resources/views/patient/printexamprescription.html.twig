@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {#<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>#}
+    <style type="text/css">
+        .center {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .left {
+            text-align: right;
+        }
+    </style>
+</head>
+
+
+<body>
+<table width="808" border="0">
+    <tr>
+        <td width="439" height="251" class="center">REPUBLIQUE DU SENEGAL<br/>
+            <em>Un Peuple - Un But - Une foi</em><br/>
+            ------------------<br/>
+            <strong>Le Ministre de la Fonction publique<br/>
+                de la Rationalisation des Effectifs <br/>
+                et du Renouveau du Service public<br/>
+            </strong> ------------------<br/>
+            Centre Médico-Social de la Fonction Publique <br/>
+            ------------------<br/>
+            <strong>153, Rue Moussé Diop - Dakar <br/>
+                Tél.: 33 821 53 04 </strong>
+        </td>
+        <td width="359" class="left">dakar, le {{ "now"|date("d/m/Y") }}</td>
+    </tr>
+</table>
+<p>&nbsp;</p>
+<p>
+<table width="220" border="1" align="center">
+    <tr>
+        <td class="center">BULLETIN D'EXAMEN</td>
+    </tr>
+</table>
+</p>
+<br>
+<br>
+<p>
+    Prénom (s) :
+    ................................{{ consultation.patient.prenomPatient }}.....................................................................................<br>
+
+</p>
+<p>Nom : .....................................{{ consultation.patient.nomPatient }}....................................... Matricule
+    :........................{{ consultation.patient.matricule }}................. </p>
+<p>Indication :
+    ............................................................................................................................................................ </p>
+<p>Examen demandés:     {% for exam in consultation.typeexamen %} {{ exam }}
+    {% if not loop.last %}
+        ,
+    {% endif %}
+    {% endfor %} </p>
+<p>&nbsp;</p>
+<table width="200" border="0" align='right'>
+    <tr>
+        <td><u>Le Médecin</u></td>
+    </tr>
+</table>
+</body>
+</html>
+
+

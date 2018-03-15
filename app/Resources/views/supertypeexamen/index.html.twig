@@ -1,0 +1,62 @@
+{% extends '::base.html.twig'%}
+{% block header %}
+    {% include 'FPCMSBundle:layout:header.html.twig' %}
+{% endblock %}
+{% block body %}
+    {#<div id="wrapper"> #}
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Liste des types examen</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        {#Liste des types d'examen#}
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="row">
+                            {% for flashMessage in app.session.flashbag.get('supertypeexam') %}
+                                <div id="message" class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <strong>Succes:</strong>  {{ flashMessage }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Type examen</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for typeexamen in supertypeexamens %}
+                                <tr class="gradeA text-center">
+                                    <td>{{ typeexamen.nom }}</td>
+                                    <td class="center"> <a href="{{path('supertypeexamen_edit', {id:typeexamen.id})}}" title="Modifier"><i class="fa fa-edit btn btn-sm btn-primary" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+{% endblock %}

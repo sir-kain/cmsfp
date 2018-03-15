@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        .center {
+            text-align: center;
+            font-weight: bold;
+            color: #00C;
+        }
+
+        .centre {
+            margin-left: 200px;
+        }
+        .centre2 {
+            margin-left: 240px;
+        }
+
+        .left {
+            text-align: right;
+            color: #00C;
+        }
+
+        ITALIQUE {
+            font-style: italic;
+        }
+
+        italic {
+            font-style: italic;
+        }
+
+        .blue {
+            color: #00F;
+        }
+
+        .blue {
+            color: #03C;
+            text-align: center;
+            font-family: "Lucida Console", Monaco, monospace;
+        }
+
+        .text-medic {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+<table width="871" border="0">
+    <tr>
+        <td width="439" height="251" class="center"><p align="center">LE MINISTRE DE LA FONCTION PUBLIQUE<br/>
+                DE LA RATIONALISATION DES EFFECTIFS<br/>
+                ET DU RENOUVEAU DU SERVICE PUBLIC<br/>
+                ------------------<br/>
+                <i>Centre Médico-Social de la Fonction Publique</i><br/>
+                ------------------<br/>
+                153, Rue Moussé Diop - Dakar<br/>
+                Tél.: 33 821 53 04</p></td>
+        <td width="460" class="left">
+            dakar, le {{ 'now' | date('d-m-Y') }} <br>
+            Prenom: <strong>{{ consultation.patient.prenomPatient }}</strong> <br>
+            Nom: <strong>{{ consultation.patient.nomPatient }}</strong>
+        </td>
+    </tr>
+</table>
+<p>&nbsp;</p>
+<table width="200" border="2" align="center" bordercolor="#0000CC">
+    <tr>
+        <td class="center">ORDONNANCE</td>
+    </tr>
+</table>
+</p>
+<br>
+<table width="1000" align="center">
+    {#<tr>#}
+    {#<td><strong>Médicament</strong></td>#}
+    {#<td><strong>Quantité</strong></td>#}
+    {#<td><strong>Indication</strong></td>#}
+    {#</tr>#}
+    {% for medicament in ordonance %}
+        <tr class="center">
+            <label class="text-medic centre"> <span class="badge"> {{ loop.index }} </span> </label>
+            <label class="text-medic">{{ medicament.medicament }} unité {{ medicament.nombreunite }}</label>
+        </tr> <br>
+        <tr class="center">
+            {% if medicament.indication == 'Matin Midi Soir' %}
+                <label class="text-medic centre2">{{ medicament.quantite }} le matin</label> <br>
+                <label class="text-medic centre2">{{ medicament.quantite }} à midi </label> <br>
+                <label class="text-medic centre2">{{ medicament.quantite }} le soir</label> <br>
+            {% elseif medicament.indication == 'Matin Soir' %}
+                <label class="text-medic centre2"> {{ medicament.quantite }} le matin </label><br>
+                <label class="text-medic centre2">{{ medicament.quantite }} le soir</label> <br>
+            {% elseif medicament.indication == 'Semaine' %}
+                <label class="text-medic centre2">{{ medicament.quantite }} par semaine </label> <br>
+            {% else %}
+                <label class="text-medic centre2"> {{ medicament.quantite }} / {{ medicament.indication }}</label> <br>
+            {% endif %}
+        </tr>
+
+    {% endfor %}
+</table>
+<br>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<tr class="blue">_______________________________________________________________________________________</tr>
+<p class="blue">Prière de rapporter l&rsquo;ordonnance à la prochaine consultation</p>
+</body>
+</html>

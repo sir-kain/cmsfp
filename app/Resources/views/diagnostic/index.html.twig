@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Diagnostics list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Forupdate</th>
+                <th>Chronique</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for diagnostic in diagnostics %}
+            <tr>
+                <td><a href="{{ path('diagnostic_show', { 'id': diagnostic.id }) }}">{{ diagnostic.id }}</a></td>
+                <td>{{ diagnostic.forupdate }}</td>
+                <td>{{ diagnostic.chronique }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('diagnostic_show', { 'id': diagnostic.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('diagnostic_edit', { 'id': diagnostic.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('diagnostic_new') }}">Create a new diagnostic</a>
+        </li>
+    </ul>
+{% endblock %}

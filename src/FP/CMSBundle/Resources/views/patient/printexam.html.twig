@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {#<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>#}
+    <style type="text/css">
+        .titre {
+            text-align: center;
+        }
+
+        .sceau {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .titr {
+            text-align: center;
+        }
+
+        .left {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<p class="sceau">REPUBLIQUE DU SENEGAL</p>
+<p class="sceau"> Un Peuple - Un But - Une Foi </p>
+<p class="sceau">-------------------</p>
+<p class="sceau">MINISTERE DE LA FONCTION PUBLIQUE DE LA RATIONALISATION DES <br/>EFFECTIFS ET DU RENOUVEAU DU SERVICE
+    PUBLIC</p>
+<p class="sceau">--------------------</p>
+<p class="sceau">CENTRE MEDICO-SOCIAL DE LA FONCTION PUBLIQUE</p>
+<p>&nbsp;</p>
+
+<table style="margin-left: 100px" width="900" height="199" border="0" align='center'>
+    <tr>
+        <td width="508"><strong>Prénom & Nom:</strong>{{ exam.patient.prenomPatient | capitalize}} {{ exam.patient.nomPatient  | capitalize}}</td>
+        <td width="334">
+            <strong>Prescripteur:</strong>Dr.
+            {% if consultation == null %}
+                {{ laborantin.prenom | capitalize}} {{ laborantin.nom | capitalize }}
+            {% else %}
+            {{ consultation.utilisateur.prenom | capitalize }} {{ consultation.utilisateur.nom | capitalize}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Genre: </strong>{{ exam.patient.genrePatient }}</td>
+        <td><strong>Code Patient</strong>: {{ exam.patient.numerodossier}}</td>
+    </tr>
+    <tr>
+        <td><strong>Age: </strong>{{ age }} ans</td>
+        <td><strong>Date de prélèvement:</strong>  {{ exam.dateprelevement |date('d/m/Y') }}</td>
+    </tr>
+    <tr>
+        <td><strong> Téléphone</strong>: {{ exam.patient.telPatient }}</td>
+        <td><strong>Diagnostic:</strong>
+            {% if consultation != null %}
+            {% for diagnostic in consultation.pathologiesh %}
+                {{ diagnostic }} <br>
+            {% endfor %}
+            {% endif %}
+        </td>
+    </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table width="900" border="0">
+    <tr>
+        <td width="150"><span class="left">Examen</span></td>
+        <td width="450"><span class="left">PARAMETRES</span></td>
+        <td width="315"><span class="sceau">RESULTATS</span></td>
+        <td width="199"><span class="right">Valeurs usuelles</span></td>
+    </tr>
+
+    {% for examen in examens %}
+        <tr>
+            <td width="150"><span>{{ examen.typeexamen.nomTypeExamen }}</span></td>
+            <td width="450"><span>{{ examen.champstypeexam.libelle }}</span></td>
+            <td width="315"><strong>{{ examen.resultat }}   </strong>    {{ examen.champstypeexam.unite }}</td>
+            {% if examen.champstypeexam.valeurminf == null %}
+                <td width="199"><span> ({{ examen.champstypeexam.valeurmin }}
+                        - {{ examen.champstypeexam.valeurmax }})</span>
+                </td>
+
+            {% else %}
+                {% if examen.patient.genrePatient == 'Féminin' %}
+                    <td width="199"><span> ({{ examen.champstypeexam.valeurminf }} - {{ examen.champstypeexam.valeurmaxf }}
+                            )</span>
+                    </td>
+                {% else %}
+                    <td width="199"><span> ({{ examen.champstypeexam.valeurmin }} - {{ examen.champstypeexam.valeurmax }}
+                            )</span>
+                    </td>
+                {% endif %}
+            {% endif %}
+        </tr>
+    {% endfor %}
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="center">Le Responsable du laboratoire </p>
+
+
+</body>
+</html>

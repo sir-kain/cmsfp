@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+{% block header %}
+    {% include 'FPCMSBundle:layout:header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Saisie résultat examen</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            {% for flashMessage in app.session.flashbag.get('examennewest') %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <strong>Attention:</strong> {{ flashMessage }}
+                </div>
+            {% endfor %}
+        </div>
+        <!-- /.row -->
+        {% if newpatient %}
+            {{ include ('FPCMSBundle:form_utils:form_new_examen.html.twig', {
+                form: form,
+                button_label: 'Enregistrer',
+                nouvel_examen: true,
+            }) }}
+        {% else %}
+            {{ include ('FPCMSBundle:form_utils:form_examen.html.twig', {
+                form: form,
+                button_label: 'Enregistrer',
+                nouvel_examen: true,
+            }) }}
+        {% endif %}
+
+    </div>
+    <!-- /#page-wrapper -->
+{% endblock %}

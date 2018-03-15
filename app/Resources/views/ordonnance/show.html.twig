@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ordonnance</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ordonnance.id }}</td>
+            </tr>
+            <tr>
+                <th>Indication</th>
+                <td>{{ ordonnance.indication }}</td>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ ordonnance.quantite }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ordonnance_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('ordonnance_edit', { 'id': ordonnance.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

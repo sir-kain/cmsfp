@@ -1,0 +1,141 @@
+fpcms_ordonnance:
+    resource: "@FPCMSBundle/Resources/config/routing/ordonnance.yml"
+    prefix:   /ordonnance
+
+index:
+    path:     /
+    defaults: { _controller: FPCMSBundle:Default:indextemplate }
+
+    
+#index:
+ #   path:     /index
+  #  defaults: { _controller: FPCMSBundle:Default:indextemplate }
+
+indexservice:
+    path:     /service/index
+    defaults: { _controller: FPCMSBundle:Service:indexservice }
+
+ajoutservice:
+    path:     /service/ajoutservice
+    defaults: { _controller: FPCMSBundle:Service:ajoutservice }
+
+editservice:
+    path:     /service/{id}
+    defaults: { _controller: FPCMSBundle:Service:editservice }
+
+deleteservice:
+    path:     /service/id/{id}
+    defaults: { _controller: FPCMSBundle:Service:deleteservice }
+
+indexuser:
+    path:     /users
+    defaults: { _controller: FPCMSBundle:Utilisateur:indexuser }
+
+ajoutuser:
+    path:     /user/new
+    defaults: { _controller: FPCMSBundle:Utilisateur:ajout }
+
+
+edituser:
+    path:     /user/edit/{id}
+    defaults: { _controller: FPCMSBundle:Utilisateur:edit }
+
+
+indexpatient:
+    path:     /patient/index
+    defaults: { _controller: FPCMSBundle:Patient:indexpatient }
+
+detailpatient:
+    path:     /detailpatient/{id}
+    defaults: { _controller: FPCMSBundle:Patient:detailpatient }
+
+ajoutpatient:
+    path:     /patient/ajoutpatient
+    defaults: { _controller: FPCMSBundle:Patient:ajoutpatient }
+
+editpatient:
+    path:     /editpatient/{id}
+    defaults: { _controller: FPCMSBundle:Patient:editpatient }
+
+getterrain:
+    path:     /getterrain/{id}
+    defaults: { _controller: "FPCMSBundle:Patient:getterrain" }
+
+getpatient:
+    path:     /getpatient/
+    defaults: { _controller: "FPCMSBundle:Patient:getpatient" }
+
+
+#---------------------Consultation--------------------
+ajoutconsultation:
+    path:     /patient/consultation/new/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:ajoutconsultation }
+
+ajoutconsultationinf:
+    path:     /patient/consultation/new/infirmier/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:ajoutconsultationinf }
+
+editconsultation:
+    path:     /patient/consultation/edit/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:editconsultation }
+
+editconsultationinf:
+    path:     /patient/consultation/edit/infirmier/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:editconsultationinf }
+
+consultationview:
+    path:     /patient/consultation/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:consultationview }
+
+
+apiconsultation:
+    path:     /getresultat
+    defaults: { _controller: "FPCMSBundle:Consultation:consult" }
+
+
+printRP:
+    path:     /rp/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:printrp }
+
+printexam:
+    path:     /exam/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:printexam }
+
+printexamwithoutconsult:
+    path:     /examwithoutconsul/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:printexamwithoutconsult }
+
+printbulletinexam:
+    path:     /bulletinexam/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:printbulletinexam}
+
+printrecuexam:
+    path:     /recuexam/{numconsult}
+    defaults: { _controller: FPCMSBundle:Examen:printRecuExam}
+
+
+printordonnance:
+    path:     /printordonnance/{id}
+    defaults: { _controller: FPCMSBundle:Consultation:printordonnance}
+
+
+
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile

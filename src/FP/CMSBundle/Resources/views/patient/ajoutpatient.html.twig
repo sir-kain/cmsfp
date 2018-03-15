@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block header %} 
+
+        {% include 'FPCMSBundle:layout:header.html.twig' %}
+{% endblock %}
+{% block body %}
+
+        <div id="page-wrapper">
+
+            {{ include ('FPCMSBundle:form_utils:form_patient.html.twig', {
+            form: form,
+            button_label: 'Enregistrer',
+            nouveau_patient: true,
+            }) }}
+        </div>
+        <!-- /#page-wrapper -->
+
+{% endblock %}

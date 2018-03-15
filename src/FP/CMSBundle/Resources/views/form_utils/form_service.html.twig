@@ -1,0 +1,49 @@
+{{ form_start(form) }}
+      {% if nouveau_service %}
+          <i class="fa fa-plus" aria-hidden="true"></i> Ajouter une nouvelle unité
+      {% else %}
+          <i class="fa fa-edit" aria-hidden="true"></i> Modifier une unité
+      {% endif %}
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+    {# Génération du champ numéro de projet. #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.nomService, "Unité") }}
+    {# Affichage des erreurs du champs. #}
+    {{ form_errors(form.nomService) }}
+    {# Génération de l'input. #}
+    {{ form_widget(form.nomService, {'attr': {'class': 'form-control'}}) }}
+</div>
+{# Génération du champ date projet. #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.adresseService, "Adresse") }}
+    {# Affichage des erreurs du champs. #}
+    {{ form_errors(form.adresseService) }}
+    {# Génération de l'input. #}
+    {{ form_widget(form.adresseService, {'attr': {'class': 'form-control'}}) }}
+</div>
+{# Génération du champ type. #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.telService, "Telephone") }}
+    {# Affichage des erreurs du champs. #}
+    {{ form_errors(form.telService) }}
+    {# Génération de l'input. #}
+    {{ form_widget(form.telService, {'attr': {'class': 'form-control'}}) }}
+</div>
+<a href="{{ path('indexservice') }}" class="btn btn-outline btn-danger">
+    <i class="fa fa-ban"></i> Annuler
+</a>
+<button type="submit" class="btn btn-success btn-outline">
+    {% if nouveau_service %}
+        <i class="fa fa-plus"></i> {{ button_label }}
+    {% else %}
+        <i class="fa fa-save"></i> {{ button_label }}
+    {% endif %}
+</button>
+{# Génération automatique des champs pas encore écrits. #}
+    {{ form_rest(form) }}    
+  {# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}

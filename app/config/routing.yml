@@ -1,0 +1,47 @@
+fpcms_supertypeexamen:
+    resource: "@FPCMSBundle/Controller/SupertypeexamenController.php"
+    type:     annotation
+
+#upload_upload:
+ #   resource: "@UploadUploadBundle/Resources/config/routing.yml"
+  #  prefix:   /
+
+tag_type_examen:
+    resource: "@TagBundle/Controller/TypeExamenController.php"
+    type:     annotation
+
+fpcms_examen:
+    resource: "@FPCMSBundle/Controller/ExamenController.php"
+    type:     annotation
+
+tag:
+    resource: "@TagBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fpcms_diagnostic:
+    resource: "@FPCMSBundle/Controller/DiagnosticController.php"
+    type:     annotation
+
+fpcms_antecedent:
+    resource: "@FPCMSBundle/Controller/AntecedentController.php"
+    type:     annotation
+
+fpcms_medicament:
+    resource: "@FPCMSBundle/Controller/MedicamentController.php"
+    type:     annotation
+
+fpcms_medicament:
+    resource: "@FPCMSBundle/Controller/MedicamentController.php"
+    type:     annotation
+
+fpcms:
+    resource: "@FPCMSBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

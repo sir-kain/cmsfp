@@ -1,0 +1,27 @@
+services:
+    tag.form.type.tags:
+        class: CMSFP\TagBundle\Form\Type\PathologiesType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }
+
+    tag.form.type.hypothese:
+        class: CMSFP\TagBundle\Form\Type\PathologieshType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }
+
+    tag.form.type.typeexam:
+        class: CMSFP\TagBundle\Form\Type\TypeExamenType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }
+
+    tag.form.type.medic:
+            class: CMSFP\TagBundle\Form\Type\MedicamentsType
+            arguments: ['@doctrine.orm.entity_manager']
+            tags:
+                - { name: form.type }
+#    tag.example:
+#        class: CMSFP\TagBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

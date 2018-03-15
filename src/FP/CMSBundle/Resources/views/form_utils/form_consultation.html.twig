@@ -1,0 +1,239 @@
+{{ form_start(form) }}
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel" style="border-color: #5bb55b;">
+            <div class="panel-heading" style="background-color: #5bb55b">
+                <strong> Consultation </strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {# Génération du champ numéro de projet. #}
+                        <div class="form-group">
+                            {{ form_label(form.soustypeconsultation, "Type Consultation") }}
+                            {# Affichage des erreurs du champs. #}
+                            {{ form_errors(form.soustypeconsultation) }}
+                            {# Génération de l'input. #}
+                            {{ form_widget(form.soustypeconsultation, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.motif, "Motif") }}
+                            {# Affichage des erreurs du champs. #}
+                            {{ form_errors(form.motif) }}
+                            {# Génération de l'input. #}
+                            {{ form_widget(form.motif) }}
+                        </div>
+                        <div class="form-group {% if not form.observation.vars.valid %}has-error{% endif %}">
+                            {{ form_label(form.observation, "Observation ") }}
+                            <span class="text-danger">*</span>
+                            {# Affichage des erreurs du champs. #}
+                            {{ form_errors(form.observation) }}
+                            {# Génération de l'input. #}
+                            {{ form_widget(form.observation, {'attr': {'rows': '2'}}) }}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                     {#Génération du label.#}
+                                    {{ form_label(form.pathologiesh, "Hypothèse diagnostic") }}
+                                     {#Affichage des erreurs du champs.#}
+                                    {{ form_errors(form.pathologiesh) }} <br>
+                                     {#Génération de l'input.#}
+                                    {{ form_widget(form.pathologiesh, {'id': 'custom-templates',
+                                        'attr': {'class': ' tag-input'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.pathologies, "Diagnoctic") }}
+                                    {# Affichage des erreurs du champs. #}
+                                    {{ form_errors(form.pathologies) }} <br>
+                                    {# Génération de l'input. #}
+                                    {{ form_widget(form.pathologies, {'id': '',
+                                        'attr': {'class': ' tag-input'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        {% if app.user.typeuser.profil == 'Sage femme' %}
+                        <div class="form-group">
+                            {{ form_label(form.dernieresregles, "Date des dernières regles") }}
+                            {# Affichage des erreurs du champs. #}
+                            {{ form_errors(form.dernieresregles) }}
+                            {# Génération de l'input. #}
+                            {{ form_widget(form.dernieresregles, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-6 -->
+    {% if app.user.typeuser.profil != 'Chirurgie dentaire' %}
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <strong>Constantes</strong>
+            </div>
+            <div class="panel-body">
+                    <fielset>
+                        <legend><strong style="color: #3f903f; font-size: 15px;">Pression arterielle (en mmHg)</strong> </legend>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.systole, "Systolique") }}
+                                {{ form_widget(form.systole, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.systole) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.diastole, "Diastolique") }}
+                                {{ form_widget(form.diastole, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.diastole) }}
+                            </div>
+                        </div>
+                    </fielset>
+                <div class="form-group">
+                    {{ form_label(form.frequence_cardiaque, "Frequence Cardiaque ou Pouls (battements par minute)") }}
+                    {# Affichage des erreurs du champs. #}
+                    {{ form_errors(form.frequence_cardiaque) }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.frequence_cardiaque, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {# Génération du champ type. #}
+                {#<div class="row">#}
+                    <div class="form-group col-md-6">
+                        {{ form_label(form.poids, "Poids (en kg)") }}
+                        {# Affichage des erreurs du champs. #}
+                        {{ form_errors(form.poids) }}
+                        {# Génération de l'input. #}
+                        {{ form_widget(form.poids, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    {# Génération du champ objet. #}
+                    <div class="form-group col-md-6">
+                        {{ form_label(form.taille, "Taille (en cm)") }}
+                        {# Affichage des erreurs du champs. #}
+                        {{ form_errors(form.taille) }}
+                        {# Génération de l'input. #}
+                        {{ form_widget(form.taille, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    {# Génération du champ effectif. #}
+                    <div class="form-group col-md-6">
+                    {{ form_label(form.perimetreabdominal, "Perimètre abdo (cm)") }}
+                    {# Affichage des erreurs du champs. #}
+                    {{ form_errors(form.perimetreabdominal) }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.perimetreabdominal, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {#</div>#}
+                {# Génération du champ effectif. #}
+                <div class="form-group col-md-6">
+                    {{ form_label(form.temperature, "Temperature (en °C)") }}
+                    {# Affichage des erreurs du champs. #}
+                    {{ form_errors(form.temperature) }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.temperature, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {#<div class="form-group">#}
+                    {#<fielset>#}
+                        {#<legend><strong style="color: #3f903f; font-size: 15px;">Formule de Crockoft</strong> </legend>#}
+                        {#( <input type="number" value="140" class="col-sm-2">#}
+                         {#<input type="number" value="140" class="col-sm-2"> )#}
+                    {#</fielset>#}
+                {#</div>#}
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-6 -->
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <strong> Decisions prises </strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <fieldset class="col-md-6 col-md-offset-3">
+                        <legend><strong style="color: #3f903f; font-size: 16px;">Rendez-vous</strong></legend>
+                        <div class="form-group">
+                            {{ form_widget(form.r_d_v.dateRDV, {'id':'rdv',
+                                'attr': {'class': 'form-control datepickerRDV', 'placeholder': 'jj/MM/aaaa HH:mm'}}) }}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset class="col-md-6 col-md-offset-3">
+                        <legend><strong style="color: #3f903f; font-size: 16px;">Prescrire analyses</strong></legend>
+                        <div class="form-group">
+                            {#<label class="col-md-12" for="nbjour">Nombre de jours</label>#}
+                            {{ form_widget(form.typeexamen,
+                                {'attr': {'class': 'form-control tag-input-type', 'placeholder': 'Ajouter une analyse'}}) }}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset class="col-md-6 col-md-offset-3">
+                        <legend><strong style="color: #3f903f; font-size: 16px;">Repos Médical</strong></legend>
+                        <div class="form-group">
+                            {#<label class="col-md-12" for="nbjour">Nombre de jours</label>#}
+                            <input placeholder="Nombre de jours" type="number" id="" min="0"
+                                   name="nbjrrepos" class="form-control">
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="form-group col-md-12">
+                    {{ form_label(form.notederefernce, "Réferer pour une consultation spécialisée") }}
+                    {# Affichage des erreurs du champs. #}
+                    {{ form_errors(form.notederefernce) }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.notederefernce, { 'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="form-group col-md-12">
+                    {{ form_label(form.traitement, "Prescire un traitement") }}
+                    {# Affichage des erreurs du champs. #}
+                    {{ form_errors(form.traitement) }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.traitement, { 'attr': {'class': 'form-control'}}) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6" id="ordonnancesection">
+        <div class="panel" style="border-color: #5bb55b">
+            <div class="panel-heading" style="background-color: #5bb55b">
+                <strong> Ordonnance </strong>
+                <button type="button" data-toggle="modal" data-target="#oneMedicament" title="ajout medicaments"
+                        class="btn btn-success"><span class="fa fa-plus"></span></button>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group" id="medicamentList">
+                    {% for lign in prescrit %}
+                        <li class='list-group-item ordonnanc'> {{ lign.medicament.nomMedicament }}
+                            <strong>Quantité:</strong> {{ lign.quantite }}
+                            <strong>Indication:</strong> {{ lign.indication }}
+                            <button type='button' data-id="{{ lign.id }}"  data-confirm='Voulez-vous supprimer le medicament?'
+                                    class='fa fa-trash pull-right btn btn-danger btn-outline delete-medic'>
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<button type="submit" class="btn btn-outline btn-success">
+    {% if nouvelle_consultation %}
+        <i class="fa fa-plus"></i> {{ button_label }}
+    {% else %}
+        <i class="fa fa-save"></i> {{ button_label }}
+    {% endif %}
+</button>
+{{ form_end(form) }}

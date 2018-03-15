@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+{% block header %} 
+        {% include 'FPCMSBundle:layout:header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+
+        {{ include ('FPCMSBundle:form_utils:form_medicament.html.twig', {
+            form: form,
+            button_label: 'Ajouter',
+            nouveau_medicament: new,
+        }) }}
+
+
+{% endblock %}

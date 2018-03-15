@@ -1,0 +1,235 @@
+{% extends '::base.html.twig' %}
+{% block header %}
+    {% include 'FPCMSBundle:layout:header.html.twig' %}
+{% endblock %}
+{% block body %}
+    {# <div id="wrapper"> #}
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                </h1>
+                {% for flashMessage in app.session.flashbag.get('Profil') %}
+                    <div id="message" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('droitConsultation') %}
+                    <div id="message" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <strong>Attention:</strong> {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-users fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                {% if app.user.typeuser.profil == 'Administrateur' %}
+                                    <div class="huge">{{ data.nbpatients }}</div>
+                                    <div>Patients</div>
+                                {% else %}
+                                    {% if app.user.typeuser.profil != 'Laborantin' %}
+                                        <div class="huge">{{ data.nbpatientM }}</div>
+                                        <div>Patients</div>
+                                    {% else %}
+                                        <div class="huge">{{ data.nbpatientexam }}</div>
+                                        <div>Patients</div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{{ path('indexpatient') }}">
+                        <div class="panel-footer">
+                            <span class="pull-left"></span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user-md fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                {% if app.user.typeuser.profil == 'Administrateur' %}
+                                    <div class="huge">{{ data.nbconsultations }}</div>
+                                    <div>Consultations</div>
+                                {% else %}
+                                    {% if app.user.typeuser.profil != 'Laborantin' %}
+                                        <div class="huge">{{ data.nbconsultationM }}</div>
+                                        <div>Consultations</div>
+                                    {% else %}
+                                        <div class="huge">{{ data.nbexamens }}</div>
+                                        <div>Examens</div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if app.user.typeuser.profil != 'Laborantin' %}
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left"></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('examen_lastest') }}">
+                            <div class="panel-footer">
+                                <span class="pull-left"></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-calendar fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                {% if app.user.typeuser.profil == 'Administrateur' %}
+                                    <div class="huge">{{ data.nbrdv }}</div>
+                                    <div>Mes rendez-vous</div>
+                                {% else %}
+                                    {% if app.user.typeuser.profil != 'Laborantin' %}
+                                        <div class="huge">{{ rdv | length }}</div>
+                                        <div>Mes rendez-vous</div>
+                                    {% else %}
+                                        <div class="huge">{{ data.nbexamattente }}</div>
+                                        <div>Examens en attente</div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if app.user.typeuser.profil != 'Laborantin' %}
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left"></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('examen_index') }}">
+                            <div class="panel-footer">
+                                <span class="pull-left"></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Courbe d'évolution des
+                        {% if app.user.typeuser.profil == 'Laborantin' %}
+                            examens
+                        {% else %}
+                            consultations
+                        {% endif %}
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div id="morris-area-chart-consultation"></div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        {% if app.user.typeuser.profil != 'Laborantin' %}
+                            <strong> Vos prochains Rendez-vous </strong>
+                        {% else %}
+                            <strong> Examen en attente </strong>
+                        {% endif %}
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {% if app.user.typeuser.profil != 'Laborantin' %}
+                                {% for rv in rdv %}
+                                    <li class="list-group-item">
+                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                        <a href="{{ path('detailpatient', {id: rv.patient.id}) }}">
+                                            {{ rv.dateRDV | date('j/M/Y H:i:s') }}
+                                        </a>
+                                    </li>
+                                    {% set nbrdv = loop.length %}
+                                {% else %}
+                                    <li class="list-group-item">
+                                        Vous ne disposez pas de rendez-vous.
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                {% for consult in data.groupexam %}
+                                    <li class="list-group-item">
+                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                        {{ consult[0]['prenom_patient'] }} {{ consult[0]['nom_patient'] }}
+                                        <a href="{{ path('createexams', {numeroconsult: consult[0].numeroconsultation}) }}"
+                                           title="Examiner">
+                                            {% for typeexam in consult %}
+                                                {{ typeexam.nomTypeExamen }}
+                                                {% if not loop.last %}
+                                                    -
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                {% if data.groupexam == [] %}
+                                    <li class="list-group-item">
+                                        Pas d'examen en attente
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+    {# </div> #}
+    <!-- /#page-wrapper -->
+
+{% endblock %}

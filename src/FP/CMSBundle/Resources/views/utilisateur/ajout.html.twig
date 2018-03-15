@@ -1,0 +1,114 @@
+{% extends '::base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block header %}
+    {% include 'FPCMSBundle:layout:header.html.twig' %}
+{% endblock %}
+{% block body %}
+
+    {#
+
+    {% trans_default_domain 'FOSUserBundle' %}
+
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+        {{ form_widget(form) }}
+        <div>
+            <input type="submit" value="{{ 'registration.submit'|trans }}" />
+        </div>
+    {{ form_end(form) }} #}
+
+
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <strong style="font-family: 'Montserrat', sans-serif;">Ajouter un utilisateur</strong>
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        {#Médecin#}
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+
+                            {# {{ include ('FPCMSBundle:form_utils:form_medecin.html.twig', {
+                            form: form,
+                            button_label: 'Ajouter',
+                            nouveau_medecin: true,
+                             }) }} #}
+
+                            <div class="col-lg-6">
+                                {{ form_start(form, {'method': 'post', 'attr': {'class': 'fos_user_registration_register'}}) }}
+                                <div class="form-group">
+                                    {{ form_label(form.type_user, "Type utilisateur") }}
+                                    {{ form_widget(form.type_user, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.type_user) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.username) }}
+                                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.username) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.email) }}
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.email) }}
+                                </div>
+                                <div class="form-group">
+                                    {# {{ form_label(form.nom) }} #}
+                                    <label class="required">Nom</label>
+                                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    {# {{ form_label(form.prenom) }} #}
+                                    <label class="required">Prenom</label>
+                                    {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group">
+                                    {# {{ form_label(form.genre) }} #}
+                                    <label class="required">Genre</label>
+                                    {{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.service) }}
+                                    {{ form_widget(form.service, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                {#<div class="form-group">#}
+                                    {#{{ form_label(form.specialite) }}#}
+                                    {#{{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                <div class="col-md-4 pull-right">
+                                    <input class="btn btn-success btn-block" type="submit"
+                                           value="Enregistrer"/>
+                                </div>
+                                <a href="{{ path('indexuser') }}" class="btn btn-outline btn-danger pull-right">
+                                    <i class="fa fa-ban"></i> Annuler
+                                </a>
+                            </div>
+
+                            {{ form_end(form) }}
+                            {# </form> #}
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+
+
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+{% endblock %}

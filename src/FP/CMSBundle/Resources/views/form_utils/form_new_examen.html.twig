@@ -1,0 +1,90 @@
+{{ form_start(form) }}
+{# Les erreurs générales du formulaire. #}
+{{ form_errors(form) }}
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Saisie résultat examen
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            {{ form_label(formpatient.numerodossier, "Numéro dossier patient") }}
+                            {# Affichage des erreurs du champs. #}
+                            {{ form_errors(formpatient.numerodossier) }}
+                            {# Génération de l'input. #}
+                            {{ form_widget(formpatient.numerodossier, {'id': 'numerodossierpatient'}) }}
+                        </div>
+                        {#<label for="numerodossierpatient">Numero dossier patient </label>#}
+                        {#<input id="numerodossierpatient" type="text" value="" name="numerodossierpatient"#}
+                        {#class="form-control">#}
+                    </div>
+                    <div class="form-group">
+                        <label for="tp">Type de patient</label>
+                        <input type="text" id="tp" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(formpatient.prenomPatient, "Prénom & nom") }}
+                        {# Affichage des erreurs du champs. #}
+                        {{ form_errors(formpatient.prenomPatient) }}
+                        {# Génération de l'input. #}
+                        {{ form_widget(formpatient.prenomPatient, {'id': 'np', 'attr': {'readonly' : true}}) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        {{ form_label(form.typeexamen, "Type examen") }}
+                        {# Affichage des erreurs du champs. #}
+                        {{ form_errors(form.typeexamen) }}
+                        {# Génération de l'input. #}
+                        {{ form_widget(form.typeexamen, {'id': 'te'}) }}
+                        <i id="patientrequis" class="text-danger" style="display: none;">Saisissez d'abord le numéro
+                            dossier</i>
+                    </div>
+
+                    <div class="form-group">
+                        {# Génération du label. #}
+                        {{ form_label(form.prix, "Prix") }}
+                        {# Affichage des erreurs du champs. #}
+                        {{ form_errors(form.prix) }}
+                        {# Génération de l'input. #}
+                        {{ form_widget(form.prix, {'id': 'pr', 'attr': {'readonly' : true}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datepre">Date de prélevement</label>
+                        <input id="datepre" type="date" value="" class="form-control">
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="row" id="resultsection"></div>
+            {#<button type="submit" class="btn btn-success btn-outline">#}
+                {#<i class="fa fa-plus"></i> {{ button_label }}#}
+            {#</button>#}
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="alert alert-danger" id="alert-new-exam"></span>
+                </div>
+                <div class="col-md-6">
+                    <button id="createnewexamens" type="submit" class="btn btn-lg btn-success btn-outline pull-right">
+                        <i class="fa fa-plus"></i> {{ button_label }}
+                    </button>
+                </div>
+            </div>
+            {# Génération automatique des champs pas encore écrits. #}
+            {{ form_rest(form) }}
+            {# Fermeture de la balise <form> du formulaire HTML #}
+            {{ form_end(form) }}
+            <!-- /.col-lg-6 (nested) -->
+            <!-- /.row (nested) -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.row -->

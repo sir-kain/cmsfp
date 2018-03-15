@@ -1,0 +1,416 @@
+{% extends '::base.html.twig' %} {% block header %} {% include 'FPCMSBundle:layout:header.html.twig' %} {% endblock %} {% block body %} {#
+<div id="wrapper"> #}
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    Dossier de {{ patient.prenomPatient }} {{ patient.nomPatient }} [ {{ patient.numerodossier }} ]
+                </h1>
+                <div class="row">
+                    {% for flashMessage in app.session.flashbag.get('droitConsultation') %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <strong>Attention:</strong> {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+            <!-- Single button -->
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <marquee style="font-size: 25px; color: #ff3654;">{{ patient.terrainparticulier }}</marquee>
+            </div>
+            {% if app.user.typeuser.profil != 'Administrateur' %}
+                <div class="col-md-2 pull-right">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="fa fa-cog"></span> Selectionner une action
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('ajoutconsultation', {id: patient.id}) }}">
+                                {% if app.user.typeuser.profil == 'Infirmier' %}
+                                    <span class="fa fa-plus"></span> Consultation Générale
+                                {% elseif app.user.typeuser.profil == 'Sage femme' %}
+                                    <span class="fa fa-plus"></span> Consultation Prénatale
+                                {% else %}
+                                    <span class="fa fa-plus"></span> Consultation
+                                {% endif %}
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            {% if app.user.typeuser.profil == 'Infirmier' %}
+                                <li>
+                                    <a href="{{ path('ajoutconsultationinf', {id: patient.id}) }}">
+                                        <span class="fa fa-plus"></span> Pensement / Injection</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                            {% endif %}
+                            <li>
+                                <a href="{{ path('editpatient', {id:patient.id}) }}">
+                                    <span class="fa fa-edit"></span> Modifier le patient</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row" style="height: 20px;"></div>
+        <!-- /.row -->
+        <div class="row" style="font-size: 15px;">
+            <div class="col-lg-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong style="font-size: 16px;"> Informations personnelles </strong>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <i class="fa fa-chevron-up text-danger fa-pull-right"></i>
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <a href="" class="thumbnail" style="width:180px; margin-left: 50px;">
+                                            {#<img src="{{ asset("uploads/" ~ patient.filename) }}" class="img-circle">#}
+                                            {% if patient.filename != null %}
+                                                <td>
+                                                    <img src="{{ asset("uploads/" ~ patient.filename) }}" alt=""
+                                                         width="200">
+                                                </td>
+                                            {% else %}
+                                                {% if patient.genrePatient == 'Masculin' %}
+                                                    <td>
+                                                        <img src="{{ asset("uploads/Patient-avatar-M.jpeg") }}" alt=""
+                                                             width="200">
+                                                    </td>
+                                                {% else %}
+                                                    <td>
+                                                        <img src="{{ asset("uploads/Patient-avatar-F.png") }}" alt=""
+                                                             width="200">
+                                                    </td>
+                                                {% endif %}
+                                            {% endif %}
+
+                                        </a>
+
+                                        {% if patient.matricule == 'neant' %}
+                                            <li class="list-group-item">
+                                                <strong>Matricule: </strong> Non ayant droit
+                                            </li>
+                                        {% else %}
+                                            <li class="list-group-item">
+                                                <strong>Matricule: </strong>
+                                                <i class="text-danger">{{ patient.matricule }}</i>
+                                            </li>
+                                        {% endif %}
+                                        <li class="list-group-item">
+                                            <strong>Nom: </strong>{{ patient.nomPatient }}</li>
+                                        <li class="list-group-item">
+                                            <strong>Prenom: </strong>{{ patient.prenomPatient }}</li>
+                                        {% if patient.matricule != 'neant' %}
+                                            <li class="list-group-item">
+                                                <strong>Statut: </strong>{{ patient.statut }}</li>
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- List group -->
+                                    <ul class="list-group">
+                                        {% if patient.matricule != 'neant' %}
+                                            <li class="list-group-item">
+                                                <strong>Type de patient: </strong>{{ patient.typepatient.type }}</li>
+                                            <li class="list-group-item">
+                                                <strong>Appartenance: </strong>{{ patient.structure.nom }}</li>
+                                        {% endif %}
+                                        <li class="list-group-item">
+                                            <strong>Genre: </strong>{{ patient.genrePatient }}</li>
+                                        <li class="list-group-item">
+                                            <strong>Date de Naissance: </strong> {{ patient.dateNaiss | date('j/m/Y') }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Lieu de naissance: </strong> Lieu de naissance
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Telephone: </strong> {{ patient.telPatient }} </li>
+                                        <li class="list-group-item">
+                                            <strong>Email: </strong>{{ patient.email }}</li>
+                                        <li class="list-group-item">
+                                            <strong>Groupe sanguin: </strong>{{ patient.groupeSanguin }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% if patient.tuteur != null %}
+                                <div class="row">
+                                    <fieldset style="text-align: center;">
+                                        <legend><strong style="color: #3f903f;"> Personne à contacter en cas
+                                                d'urgence </strong></legend>
+                                        <div class="col-md-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <strong>Lien:</strong> {{ patient.tuteur.lienparental }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Nom:</strong> {{ patient.tuteur.prenomTuteur |capitalize }} {{ patient.tuteur.nomTuteur |capitalize }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <strong>Telephone:</strong> {{ patient.tuteur.telTuteur }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <strong>Adresse:</strong> {{ patient.tuteur.adresseTuteur }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong>RDV</strong>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseRdv">
+                            <i class="fa fa-chevron-up text-danger fa-pull-right"></i>
+                        </a>
+                    </div>
+                    <div id="collapseRdv" class="panel-collapse collapse in">
+                        <div class="panel-body" style="margin: auto; width: 80%; padding: 10px;">
+                            <a href="" class="thumbnail">
+                                <img src="{{ asset('templates/images/rdv.png') }}" class="img-circle">
+                            </a>
+                            <ul class="list-group">
+                                {% set cpt = 0 %}
+                                {% for rdvpa in rdvPatientActif %}
+                                    {% if rdvpa.dateRDV | date('j/M/y') > hier | date('j/M/y') and cpt < 2 %}
+                                        {% set cpt = cpt + 1 %}
+                                        <li class="list-group-item">
+                                            <i class="fa fa-hand-o-right"></i>
+                                            {{ rdvpa.dateRDV | date('j/M/y H:i:s') }} <br>avec
+                                            <strong>
+                                                {{ rdvpa.utilisateur.prenom }} {{ rdvpa.utilisateur.nom }}
+                                            </strong>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if cpt == 0 %}
+                                    <li class="list-group-item">
+                                        <i class="fa fa-hand-o-right"></i>
+                                        Pas de rendez-vous
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel chat-panel panel-primary">
+                    <div class="panel-heading">
+                        <strong> Dernières consultations</strong>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseCons">
+                            <i class="fa fa-chevron-up text-danger fa-pull-right"></i>
+                        </a>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div id="collapseCons" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Type de consultation</th>
+                                        <th>Intervenant</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for consult in consultations %}
+                                        {% if loop.index == 1 %}
+                                            {% set color = 'success' %}
+                                        {% endif %}
+                                        {% if loop.index == 2 %}
+                                            {% set color = 'warning' %}
+                                        {% endif %}
+                                        {% if loop.index == 3 %}
+                                            {% set color = 'danger' %}
+                                        {% endif %}
+                                        <tr class={{ color }}>
+                                            <td>{{ consult.soustypeconsultation.soustype }}</td>
+                                            <td>{{ consult.utilisateur.prenom }} {{ consult.utilisateur.nom }}</td>
+                                            <td>{{ consult.dateConsultation | date('j/M/Y') }}</td>
+                                            <td>
+                                                <a href="{{ path('consultationview', {id: consult.id}) }}">Details</a>
+                                            </td>
+                                            {% if app.user.id == consult.utilisateur.id %}
+                                                {% if consult.soustypeconsultation.soustype == 'Générale' or
+                                                consult.soustypeconsultation.soustype == 'Dentaire' %}
+                                                    <td>
+                                                        <a href="{{ path('editconsultation', {id: consult.id}) }}">Editer</a>
+                                                    </td>
+                                                {% else %}
+                                                    <td>
+                                                        <a href="{{ path('editconsultationinf', {id: consult.id}) }}">Editer</a>
+                                                    </td>
+                                                {% endif %}
+                                            {% else %}
+                                                <td></td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-6 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong> Antécédents </strong>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseAnt">
+                            <i class="fa fa-chevron-up text-danger fa-pull-right"></i>
+                        </a>
+                    </div>
+                    <div id="collapseAnt" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row list-group-item">
+                                <strong>Antécedents médicaux:</strong>
+                                {{ antecedent.medicaux }}
+                                <a href="{{ path('antecedent_edit', {id: patient.id}) }}"  title="Ajouter un antecedent médical" class="pull-right btn btn-xs btn-outline btn-warning"><i class="fa fa-plus"></i></a>
+                            </div>
+                            <div class="row list-group-item">
+                                <strong>Antécedents churirgicaux:</strong>
+                                {{ antecedent.churirgicaux }}
+                                <a href="{{ path('antecedent_edit', {id: patient.id}) }}" title="Ajouter un antecedent chirurgical" class="pull-right btn btn-xs btn-outline btn-warning"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% if patient.matricule != 'neant' %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong> Lien parental</strong>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Lien parental</th>
+                                    <th>Prenon et Nom</th>
+                                    <th>Date de naissance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for pat in patientFamille %}
+                                    {% if pat.id != patient.id %}
+                                        {% if pat.statut == 'Lui-même' %}
+                                            {% set color = 'success' %}
+                                        {% endif %}
+                                        {% if pat.statut == 'Conjoint(e)' %}
+                                            {% set color = 'warning' %}
+                                        {% endif %}
+                                        {% if pat.statut == 'Enfant' %}
+                                            {% set color = 'danger' %}
+                                        {% endif %}
+                                        <tr class={{ color }}>
+                                            <td>
+                                                {% if pat.statut == 'Lui-même' and patient.statut == 'Enfant' %}
+                                                    Parent
+                                                {% elseif pat.statut == 'Lui-même' and patient.statut == 'Conjoint(e)' %}
+                                                    Conjoint (e)
+                                                {% elseif pat.statut == 'Conjoint(e)' and patient.statut == 'Enfant' %}
+                                                    Parent
+                                                {% elseif pat.statut == 'Enfant' and patient.statut == 'Enfant' %}
+                                                    {% if pat.genrePatient == 'Masculin' %}
+                                                        Frère
+                                                    {% else %}
+                                                        Soeur
+                                                    {% endif %}
+                                                {% else %}
+                                                    {{ pat.statut }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ pat.prenomPatient }} {{ pat.nomPatient }}</td>
+                                            <td>{{ pat.dateNaiss | date('j/M/Y') }}</td>
+                                            {% if pat.filename != null %}
+                                                <td>
+                                                    <a href="{{ path('detailpatient', {id: pat.id}) }}">
+                                                        <img src="{{ asset("uploads/" ~ pat.filename) }}" alt=""
+                                                             width="25">Voir Fiche
+                                                    </a>
+                                                </td>
+                                            {% else %}
+                                                {% if pat.genrePatient == 'Masculin' %}
+                                                    <td>
+                                                        <a href="{{ path('detailpatient', {id: pat.id}) }}">
+                                                            <img src="{{ asset("uploads/Patient-avatar-M.jpeg") }}"
+                                                                 alt="" width="25">Voir Fiche
+                                                        </a>
+                                                    </td>
+                                                {% else %}
+                                                    <td>
+                                                        <a href="{{ path('detailpatient', {id: pat.id}) }}">
+                                                            <img src="{{ asset("uploads/Patient-avatar-F.png") }}"
+                                                                 alt="" width="25">Voir Fiche
+                                                            <a href="{{ path('detailpatient', {id: pat.id}) }}">
+                                                    </td>
+                                                {% endif %}
+                                            {% endif %}
+                                            {#<td>#}
+                                            {#<a href="{{ path('detailpatient', {id: pat.id}) }}">#}
+                                            {#<i class="fa fa-eye"></i> Voir Fiche#}
+                                            {#</a>#}
+                                            {#</td>#}
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-6 -->
+        </div>
+    {% endif %}
+    </div>
+    <!-- /#page-wrapper -->
+
+
+{% endblock %}

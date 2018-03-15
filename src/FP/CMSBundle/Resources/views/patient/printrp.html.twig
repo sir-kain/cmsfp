@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {#<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>#}
+    <title>Document sans nom</title>
+    <style>
+        p {
+            margin-left: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+<p>
+    République du Sénégal <br>
+    <em>Un Peuple - Un But - Une foi</em> <br>
+    <i align="center" --------------------------><br>
+        <strong> Le Ministre de la Fonction publique <br>
+            de la Rationalisation des Effectifs et du Renouveau du Service public</strong> <br>
+        ------------------------ <br>
+        Centre Médico-Social de la Fonction Publique</p>
+<br>
+<br>
+<br>
+<p>
+<table width="220" border="1" align="center">
+    <tr>
+        <td>CERTIFICAT MEDICAL</td>
+    </tr>
+</table>
+</p>
+<br>
+<br>
+<p align="left">
+    Je soussigne, Docteur <span></span>
+    <strong>{{ consultation.utilisateur.prenom }}  {{ consultation.utilisateur.nom }}</strong>
+    <br>
+
+</p>
+<p align="left">certifie avoir reçu, ce jour, en consultation <strong>
+        {% if consultation.patient.genrePatient == 'Masculin' %} M. {% else %} Mme {% endif %}
+        {{ consultation.patient.prenomPatient }} {{ consultation.patient.nomPatient }}{% if consultation.patient.typePatient == 'Ayant droit' %} Matricule: {{ consultation.patient.matricule }} {% endif %}</strong>
+</p>
+<p align="left">son état de santé actuel nécessite un repos médical de
+    <span></span> <strong>{{ nbjour }} jours </strong>
+du <strong> {{ consultation.debutRP | date('Y-m-d') }} </strong> au
+    <strong> {{ consultation.finRP | date('Y-m-d') }}</strong></p>.
+
+<p align="left"> Certificat médical établi pour servir et valoir ce que de droit. </p>
+<p>&nbsp;</p>
+<p align="right"> Dakar, le <span></span> <strong>{{ consultation.dateConsultation | date('Y-m-d') }}</strong></p>
+<p align="right"> Le Médecin</p>
+
+</body>
+</html>
+

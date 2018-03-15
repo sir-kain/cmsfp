@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Antecedents list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Allergies</th>
+                <th>Traitements</th>
+                <th>Churirgicaux</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for antecedent in antecedents %}
+            <tr>
+                <td><a href="{{ path('antecedent_show', { 'id': antecedent.id }) }}">{{ antecedent.id }}</a></td>
+                <td>{{ antecedent.allergies }}</td>
+                <td>{{ antecedent.traitements }}</td>
+                <td>{{ antecedent.churirgicaux }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('antecedent_show', { 'id': antecedent.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('antecedent_edit', { 'id': antecedent.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('antecedent_new') }}">Create a new antecedent</a>
+        </li>
+    </ul>
+{% endblock %}

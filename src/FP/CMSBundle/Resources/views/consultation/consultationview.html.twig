@@ -1,0 +1,290 @@
+{% extends '::base.html.twig' %} {% block header %} {% include 'FPCMSBundle:layout:header.html.twig' %} {% endblock %} {% block body %} {#
+<div id="wrapper"> #}
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <i class="fa fa-user" aria-hidden="true"></i> Consultation [ {{ consultation.numeroconsultation }} ]
+                    {% if app.user.id == consultation.utilisateur.id %}
+                        <a href="{{ path('editconsultation', {id: consultation.id}) }}" title="Editer la consultation"
+                           style="font-size: 14px;" class="btn btn-primary btn-outline fa fa-edit"></a>
+                    {% endif %}
+                    <a href="{{ path('detailpatient', {id: consultation.patient.id}) }}" title="retour"
+                       style="font-size: 16px;"
+                       class="btn btn-success btn-outline fa fa-arrow-circle-left pull-left"></a>
+                </h1>
+                <div class="row">
+                    {% for flashMessage in app.session.flashbag.get('consultview') %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('consultation') %}
+                        <div id="message" class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <strong>Attention:</strong> {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong> Consultation du {{ consultation.dateConsultation | date('j/M/Y') }}</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <strong>Type de consultation: </strong>
+                                        {{ consultation.soustypeconsultation.soustype }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Observation: </strong> {{ consultation.observation }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Traitement préinscrit: </strong>{{ consultation.traitement }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Note de reference: </strong>{{ consultation.notederefernce }}
+                                    </li>
+                                    {% if consultation.finRP != null %}
+                                        <li class="list-group-item">
+                                            <strong>Durée repos médical: </strong>
+                                            {{ dureerepos }} Jour(s)
+                                            <a href="{{ path('printRP', {id: consultation.id}) }}"
+                                               title="Imprimer le repos médical"
+                                               style="font-size: 10px;"
+                                               class="btn btn-warning btn-outline pull-right fa fa-print"></a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Date fin repos médical:</strong>
+                                            {{ consultation.finRP | date('j/m/Y') }}
+                                        </li>
+                                    {% endif %}
+                                    {% if consultation.rdv != null %}
+                                        <li class="list-group-item">
+                                            <strong>Rendez-vous:</strong>
+                                            {{ consultation.rdv.dateRDV  | date('j/M/Y H:i:s') }}
+                                        </li>
+                                    {% endif %}
+                                    <li class="list-group-item">
+                                        <strong>Hyphothèse diagnostic:</strong> <br>
+                                        {% for patho in consultation.pathologiesh %}
+                                            <p class="fa fa-hand-o-right">
+                                                {{ patho }}
+                                            </p>  <br>
+                                        {% endfor %}
+                                    </li>
+                                    {#{% if consultation.pathologies != null %}#}
+                                    <li class="list-group-item">
+                                        <strong>Diagnostic :</strong> <br>
+                                        {% for patho in consultation.pathologies %}
+                                            <p class="fa fa-hand-o-right">
+                                                {{ patho }}
+                                            </p> <br>
+                                        {% endfor %}
+                                    </li>
+                                    {#{% endif %}#}
+                                    {#{% if consultation.typeexamen != null %}#}
+                                    <li class="list-group-item">
+                                        <strong>Examens prescrits :</strong> <br>
+                                        {% for exam in consultation.typeexamen %}
+                                            <p class="fa fa-hand-o-right">
+                                                {{ exam }}
+                                            </p> <br>
+                                        {% endfor %}
+                                        {% if consultation.typeexamen %}
+                                            <a href="{{ path('printbulletinexam', {id: consultation.id}) }}"
+                                               class="fa fa-print"></a>
+                                        {% endif %}
+                                    </li>
+                                    {#{% endif %}#}
+
+                                </ul>
+                                {# Génération du champ date projet. #}
+                                {#<div class="form-group">#}
+                                {#<label> Decision prise: {{consultation.decisionprise}} </label>#}
+                                {#</div>#}
+                                {# Génération du champ date projet. #}
+                                {#<div class="form-group" id="daterdv" style="display:none;">#}
+                                {#<label> #}
+                                {#{% if consultation.decisionprise == 'RDV'%}#}
+                                {# {{consultation.dateRDV}} #}
+                                {#{% endif %}#}
+                                {#{% if consultation.decisionprise == 'Préinscription du traitement'%}#}
+                                {# {{consultation.traitement}} #}
+                                {#{% endif %}#}
+                                {#{% if consultation.decisionprise == 'Réferer pour une consultation externe'%}#}
+                                {# {{consultation.notedereference}} #}
+                                {#{% endif %}#}
+                                {#</label>#}
+                                {#</div>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong>Constantes</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label> Poids (kg): {{ consultation.poids }} </label>
+                        </div>
+                        {# Génération du champ objet. #}
+                        <div class="form-group">
+                            <label>Taille (cm): {{ consultation.taille }} </label>
+                        </div>
+                        {% if consultation.poids != null and consultation.taille != null and consultation.taille != 0 %}
+                            <div class="form-group">
+                                {% set taillecare = (consultation.taille * consultation.taille) / 10000 %}
+                                {% if (consultation.poids / taillecare) > 18.5  and
+                                    (consultation.poids / taillecare) < 25 %}
+                                    <label>IMC (kg/m²):
+                                        {{ (consultation.poids / taillecare) | number_format(2, '.', ',') }}
+                                    </label>
+                                {% else %}
+                                    <label class="text-danger">IMC (kg/m²):
+                                        {{ (consultation.poids / taillecare) | number_format(2, '.', ',') }}
+                                    </label>
+                                {% endif %}
+
+                            </div>
+                        {% endif %}
+                        {# Génération du champ effectif. #}
+                        <div class="form-group">
+                            <label> Temperature (°C): {{ consultation.temperature }} </label>
+                        </div>
+                        {# Génération du champ numéro patient. #}
+                        <div class="form-group">
+                            <label>
+                                Pression Arterielle (mmHg):
+                                {{ consultation.systole }} / {{ consultation.diastole }}
+                            </label>
+                        </div>
+                        {# Génération du champ numéro patient. #}
+                        <div class="form-group">
+                            {% if consultation.frequencecardiaque != null %}
+                                {% if consultation.frequencecardiaque > 60 and
+                                    consultation.frequencecardiaque < 100 %}
+                                    <label>Frequence cardiaque (battements par
+                                        min): {{ consultation.frequencecardiaque }} </label>
+                                {% else %}
+                                    <label class="text-danger">Frequence cardiaque (battements par
+                                        min): {{ consultation.frequencecardiaque }} </label>
+                                {% endif %}
+                            {% else %}
+                                <label>Frequence cardiaque (battements par
+                                    min): pas renseigné </label>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-success" style="border-color: #5bb55b;">
+                    <div class="panel-heading" style="background-color: #5bb55b; color: #f1f1f1;">
+                        <strong> Les medicaments prescrits </strong>
+                        {% if ordoConsult %}
+                            <a href="{{ path('printordonnance', {id: consultation.id}) }}"
+                               class="fa fa-print"></a>
+                        {% endif %}
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% for medic in ordoConsult %}
+                                    <div class="form-group">
+                                        <span class="badge">{{ loop.index }}</span>
+                                        <label>
+                                            {{ medic.medicament.nomMedicament }}
+                                            {{ medic.indication }} {{ medic.quantite }}
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="form-group">
+                                        <label>Pas de medicaments prescrits</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="panel panel-success" style="border-color: #5bb55b;">
+                    <div class="panel-heading" style="background-color: #5bb55b; color: #f1f1f1;">
+                        <strong> Les resultats examen </strong>
+                    </div>
+                    <div class="panel-body">
+                        {% for exam in examens %}
+                            <div class="row">
+                                <fieldset>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <strong>{{ exam.champstypeexam.libelle }}: </strong>
+                                            {% if exam.champstypeexam.valeurminf == null %}
+                                                <label class="text-danger">{{ exam.resultat }}  {{ exam.champstypeexam.unite }}  </label>
+                                                <i class="pull-right">Valeurs usuelles
+                                                    ({{ exam.champstypeexam.valeurmin }}
+                                                    - {{ exam.champstypeexam.valeurmax }})</i>
+                                            {% else %}
+                                                {% if exam.patient.genrePatient == 'Féminin' %}
+                                                    <label class="text-warning"> {{ exam.resultat }} {{ exam.champstypeexam.unite }}  </label>
+                                                    <i class="pull-right">Valeurs usuelles
+                                                        ({{ exam.champstypeexam.valeurminf }}
+                                                        - {{ exam.champstypeexam.valeurmaxf }}) </i>
+                                                {% else %}
+                                                    <label class="text-warning">{{ exam.resultat }} {{ exam.champstypeexam.unite }}  </label>
+                                                    <i class="pull-right">Valeurs usuelles
+                                                        ({{ exam.champstypeexam.valeurmin }}
+                                                        - {{ exam.champstypeexam.valeurmax }})</i>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label>Pas de résultats d'examen pour cette consultation</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if examens != null %}
+                        <div class="panel-footer">
+                            <a href="{{ path('printexam', {id: consultation.id}) }}"
+                               class="btn btn-warning btn-outline">Imprimer</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+    {# {{ include ('FPCMSBundle:form_utils:form_ordonnance.html.twig', {
+                form: form,
+                button_label: 'Ajouter',
+                nouveau_medicament: true,
+            }) }} #}
+
+{% endblock %}

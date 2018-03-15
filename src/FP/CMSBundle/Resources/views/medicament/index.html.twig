@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+{% block header %} 
+{% include 'FPCMSBundle:layout:header.html.twig' %}
+{% endblock %} 
+
+{% block body %}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Liste des medicaments</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Liste des médicaments
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="row">
+                                {% for flashMessage in app.session.flashbag.get('medicament') %}
+                                    <div id="message" class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Succes:</strong>  {{ flashMessage }}
+                                    </div>
+                                {% endfor %}
+                        </div>
+                        <div class="row">
+                            <!-- Single button -->
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fa fa-cog"></span> Selectionner une action <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li data-toggle="modal" data-target="#searchModal"><a href="#"> <span class="fa fa-search"></span> Recherche avancée</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{path('medicament_new')}}"><span class="fa fa-plus"></span> Ajouter</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><span class="fa fa-trash-o"></span> Supprimer</a></li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <br>
+                        {# ------------ #}
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Nom du medicament</th>
+                                        <th>Posologie</th>
+                                        <th>Action therapeutique</th>
+                                        <th>Presentation</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for medicament in medicaments %}
+                                    <tr>
+                                        <td>{{ medicament.nomMedicament }}</td>
+                                        <td>{{ medicament.posologie }}</td>
+                                        <td>{{ medicament.actionTherapeutique }}</td>
+                                        <td>{{ medicament.presentation }}</td>
+                                        <td class="center">
+                                                    <a href="{{ path('medicament_edit', { 'id': medicament.id }) }}" title="Modifier" class="btn btn-sm btn-primary"> <i class="fa fa-edit" aria-hidden="true"></i></a> 
+                                                    /
+                                                   <button data-confirm="Voulez-vous vraiment supprimer ce medicament ?" class="btn btn-danger btn-delete-medicament" data-id="{{medicament.id}}">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </td>
+                                    </tr>
+                                
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+{% endblock %}
+

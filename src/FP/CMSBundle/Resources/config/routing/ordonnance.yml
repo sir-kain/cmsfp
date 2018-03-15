@@ -1,0 +1,24 @@
+ordonnance_index:
+    path:     /
+    defaults: { _controller: "FPCMSBundle:Ordonnance:index" }
+    methods:  GET
+
+ordonnance_show:
+    path:     /{id}/show
+    defaults: { _controller: "FPCMSBundle:Ordonnance:show" }
+    methods:  GET
+
+ordonnance_new:
+    path:     /new
+    defaults: { _controller: "FPCMSBundle:Ordonnance:new" }
+    methods:  [GET, POST]
+
+ordonnance_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FPCMSBundle:Ordonnance:edit" }
+    methods:  [GET, POST]
+
+ordonnance_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FPCMSBundle:Ordonnance:delete" }
+    methods:  DELETE
