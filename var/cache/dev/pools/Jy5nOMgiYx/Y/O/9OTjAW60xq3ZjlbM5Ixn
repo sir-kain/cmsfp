@@ -1,4 +1,0 @@
-<?php return array (
-  0 => 9223372036854775807,
-  1 => 'a:1:{i:0;O:46:"Upload\\UploadBundle\\Annotation\\UploadableField":2:{s:56:"' . "\0" . 'Upload\\UploadBundle\\Annotation\\UploadableField' . "\0" . 'filename";s:8:"filename";s:52:"' . "\0" . 'Upload\\UploadBundle\\Annotation\\UploadableField' . "\0" . 'path";s:7:"uploads";}}',
-);
